@@ -1,3 +1,4 @@
+// 获取画布元素和绘图上下文
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
 
@@ -17,12 +18,8 @@ let food = {
 let isSpecialFood = false;
 // 新增：积分
 let score = 0;
-// 获取得分显示元素
-const scoreElement = document.getElementById('score');
 // 新增：历史最高分，从本地存储获取，如果没有则初始化为 0
 let highScore = localStorage.getItem('snakeHighScore') || 0;
-// 获取历史最高分显示元素
-const highScoreElement = document.getElementById('high-score');
 // 新增：游戏是否暂停
 let isPaused = false;
 // 新增：游戏循环定时器
@@ -83,14 +80,10 @@ function moveSnake() {
     generateFood();
     // 增加积分
     score++;
-    // 更新得分显示
-    scoreElement.textContent = score;
     // 更新历史最高分
     if (score > highScore) {
       highScore = score;
       localStorage.setItem('snakeHighScore', highScore);
-      // 更新历史最高分显示
-      highScoreElement.textContent = highScore;
     }
   } else {
     // 移除蛇的尾部
@@ -128,6 +121,11 @@ function checkGameOver() {
 function gameLoop() {
   // 清除画布
   ctx.clearRect(0, 0, canvas.width, canvas.height);
+  // 显示积分和历史最高分
+  ctx.font = '20px Arial';
+  ctx.fillStyle = 'black';
+  ctx.fillText(`得分: ${score}`, 10, 30);
+  ctx.fillText(`历史最高分: ${highScore}`, 10, 60);
   // 移动蛇
   moveSnake();
   // 绘制蛇和食物
@@ -149,8 +147,6 @@ function resetGame() {
   ];
   direction = 'right';
   score = 0;
-  // 重置得分显示
-  scoreElement.textContent = score;
   currentSpeed = normalSpeed;
   clearInterval(gameInterval);
   generateFood();
@@ -183,10 +179,6 @@ document.addEventListener('keydown', function (event) {
       break;
   }
 });
-
-// 初始化得分和历史最高分显示
-scoreElement.textContent = score;
-highScoreElement.textContent = highScore;
 
 // 开始游戏
 gameInterval = setInterval(gameLoop, currentSpeed);

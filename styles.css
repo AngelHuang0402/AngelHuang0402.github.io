@@ -2,15 +2,11 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-direction: column;
-  font-family: Arial, sans-serif;
-}
-
-#score-board {
-  margin-bottom: 20px;
-  font-size: 20px;
+  height: 100vh;
+  margin: 0;
+  background-color: #f0f0f0;
 }
 
 #gameCanvas {
-  border: 1px solid black;
+  border: 1px solid #000;
 }
